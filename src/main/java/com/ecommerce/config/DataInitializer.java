@@ -29,8 +29,8 @@ public class DataInitializer {
                 adminUsername = "admin";
             }
             
-            // Check if admin user already exists
-            if (userRepository.findByEmail(adminEmail).isEmpty()) {
+            // Check if admin user already exists (by username or email)
+            if (userRepository.findByEmail(adminEmail).isEmpty() && userRepository.findByUsername(adminUsername).isEmpty()) {
                 User adminUser = new User();
                 adminUser.setEmail(adminEmail);
                 adminUser.setUsername(adminUsername);
@@ -43,7 +43,7 @@ public class DataInitializer {
                 System.out.println("   Email: " + adminEmail);
                 System.out.println("   Username: " + adminUsername);
             } else {
-                System.out.println("✅ Admin user already exists: " + adminEmail);
+                System.out.println("✅ Admin user already exists");
             }
         };
     }

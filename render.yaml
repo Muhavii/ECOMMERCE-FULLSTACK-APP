@@ -10,8 +10,5 @@ services:
         value: prod
       - key: JWT_SECRET
         generateValue: true
-
-databases:
-  - name: ecommerce-db
-    databaseName: ecommerce_db
-    user: ecommerce_user
+      - key: DATABASE_URL
+        sync: false

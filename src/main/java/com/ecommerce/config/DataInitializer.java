@@ -29,22 +29,31 @@ public class DataInitializer {
                 adminUsername = "admin";
             }
             
-            // Check if admin user already exists (by username or email)
-            if (userRepository.findByEmail(adminEmail).isEmpty() && userRepository.findByUsername(adminUsername).isEmpty()) {
+            // Ensure admin user exists and matches configured credentials
+            userRepository.findByUsername(adminUsername).ifPresentOrElse(existing -> {
+                existing.setEmail(adminEmail);
+                existing.setPassword(passwordEncoder.encode(adminPassword));
+                existing.setRole(User.Role.ADMIN);
+                existing.setActive(true);
+                if (existing.getFullName() == null || existing.getFullName().isEmpty()) {
+                    existing.setFullName("Administrator");
+                }
+                userRepository.save(existing);
+                System.out.println("✅ Admin user updated to match configured credentials");
+            }, () -> {
                 User adminUser = new User();
                 adminUser.setEmail(adminEmail);
                 adminUser.setUsername(adminUsername);
                 adminUser.setPassword(passwordEncoder.encode(adminPassword));
                 adminUser.setRole(User.Role.ADMIN);
                 adminUser.setFullName("Administrator");
-                
+                adminUser.setActive(true);
+
                 userRepository.save(adminUser);
                 System.out.println("✅ Admin user created successfully!");
                 System.out.println("   Email: " + adminEmail);
                 System.out.println("   Username: " + adminUsername);
-            } else {
-                System.out.println("✅ Admin user already exists");
-            }
+            });
         };
     }
 }

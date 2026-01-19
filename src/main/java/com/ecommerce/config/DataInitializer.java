@@ -30,17 +30,19 @@ public class DataInitializer {
             }
             
             // Ensure admin user exists and matches configured credentials
-            userRepository.findByUsername(adminUsername).ifPresentOrElse(existing -> {
-                existing.setEmail(adminEmail);
-                existing.setPassword(passwordEncoder.encode(adminPassword));
-                existing.setRole(User.Role.ADMIN);
-                existing.setActive(true);
-                if (existing.getFullName() == null || existing.getFullName().isEmpty()) {
-                    existing.setFullName("Administrator");
+            var existing = userRepository.findByUsername(adminUsername);
+            if (existing.isPresent()) {
+                User adminUser = existing.get();
+                adminUser.setEmail(adminEmail);
+                adminUser.setPassword(passwordEncoder.encode(adminPassword));
+                adminUser.setRole(User.Role.ADMIN);
+                adminUser.setActive(true);
+                if (adminUser.getFullName() == null || adminUser.getFullName().isEmpty()) {
+                    adminUser.setFullName("Administrator");
                 }
-                userRepository.save(existing);
+                userRepository.save(adminUser);
                 System.out.println("✅ Admin user updated to match configured credentials");
-            }, () -> {
+            } else {
                 User adminUser = new User();
                 adminUser.setEmail(adminEmail);
                 adminUser.setUsername(adminUsername);
@@ -53,7 +55,7 @@ public class DataInitializer {
                 System.out.println("✅ Admin user created successfully!");
                 System.out.println("   Email: " + adminEmail);
                 System.out.println("   Username: " + adminUsername);
-            });
+            }
         };
     }
 }

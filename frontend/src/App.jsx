@@ -174,7 +174,9 @@ function App() {
         })
       })
 
-      const data = await response.json()
+      // Get text first to check if body is empty
+      const text = await response.text()
+      const data = text ? JSON.parse(text) : {}
       
       if (response.ok) {
         setToken(data.token)
@@ -187,7 +189,7 @@ function App() {
           setSuccess('')
         }, 1500)
       } else {
-        setError(data.message || 'Login failed')
+        setError(data.message || `Login failed: ${response.status} ${response.statusText}`)
       }
     } catch (error) {
       setError('Error logging in: ' + error.message)
@@ -217,7 +219,9 @@ function App() {
         })
       })
 
-      const data = await response.json()
+      // Get text first to check if body is empty
+      const text = await response.text()
+      const data = text ? JSON.parse(text) : {}
 
       if (response.ok) {
         setSuccess('Signup successful! You can now login.')
@@ -227,7 +231,7 @@ function App() {
           setSuccess('')
         }, 1500)
       } else {
-        setError(data.message || 'Signup failed')
+        setError(data.message || `Signup failed: ${response.status} ${response.statusText}`)
       }
     } catch (error) {
       setError('Error signing up: ' + error.message)

@@ -8,26 +8,6 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: DATABASE_HOST
-        fromDatabase:
-          name: ecommerce-db
-          property: host
-      - key: DATABASE_PORT
-        fromDatabase:
-          name: ecommerce-db
-          property: port
-      - key: DATABASE_NAME
-        fromDatabase:
-          name: ecommerce-db
-          property: database
-      - key: DATABASE_USER
-        fromDatabase:
-          name: ecommerce-db
-          property: user
-      - key: DATABASE_PASSWORD
-        fromDatabase:
-          name: ecommerce-db
-          property: password
       - key: JWT_SECRET
         generateValue: true
 

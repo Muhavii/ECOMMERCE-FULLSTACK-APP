@@ -8,10 +8,18 @@ services:
     envVars:
       - key: SPRING_PROFILES_ACTIVE
         value: prod
-      - key: DATABASE_URL
+      - key: SPRING_DATASOURCE_URL
         fromDatabase:
           name: ecommerce-db
-          property: connectionString
+          property: jdbcUrl
+      - key: SPRING_DATASOURCE_USERNAME
+        fromDatabase:
+          name: ecommerce-db
+          property: user
+      - key: SPRING_DATASOURCE_PASSWORD
+        fromDatabase:
+          name: ecommerce-db
+          property: password
       - key: JWT_SECRET
         generateValue: true
 

@@ -44,7 +44,7 @@ function App() {
   const fetchProducts = async () => {
     setLoading(true)
     try {
-      const response = await fetch('${API_URL}/api/products')
+      const response = await fetch(`${API_URL}/api/products`)
       const data = await response.json()
       setProducts(data || [])
     } catch (error) {
@@ -57,7 +57,7 @@ function App() {
   const fetchAdminOrders = async () => {
     try {
       const headers = token ? { 'Authorization': `Bearer ${token}` } : {}
-      const response = await fetch('${API_URL}/api/admin/orders', { headers })
+      const response = await fetch(`${API_URL}/api/admin/orders`, { headers })
       const data = await response.json()
       setAdminOrders(data || [])
     } catch (error) {
@@ -70,7 +70,7 @@ function App() {
     setLoading(true)
     try {
       const headers = token ? { 'Authorization': `Bearer ${token}` } : {}
-      const response = await fetch('${API_URL}/api/orders', { headers })
+      const response = await fetch(`${API_URL}/api/orders`, { headers })
       const data = await response.json()
       setOrders(data || [])
     } catch (error) {
@@ -94,7 +94,7 @@ function App() {
     setLoading(true)
 
     try {
-      const response = await fetch('${API_URL}/api/admin/products', {
+      const response = await fetch(`${API_URL}/api/admin/products`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
@@ -163,7 +163,7 @@ function App() {
     setLoading(true)
 
     try {
-      const response = await fetch('${API_URL}/api/auth/login', {
+      const response = await fetch(`${API_URL}/api/auth/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -202,7 +202,7 @@ function App() {
     setLoading(true)
 
     try {
-      const response = await fetch('${API_URL}/api/auth/register', {
+      const response = await fetch(`${API_URL}/api/auth/register`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
